@@ -4,6 +4,15 @@ from collections import deque
 input = sys.stdin.readline
 dir = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
+def unlock():
+    global door
+    if sum(door):
+        for y in range(Y+2):
+            for x in range(X+2):
+                if board[y][x].isupper():
+                    if door[ord(board[y][x])-ord('A')]:
+                        board[y][x] = '.'
+        door = [0]*26
 def BFS():
     global doc
     q = deque()
@@ -16,26 +25,15 @@ def BFS():
             dy, dx = ny+i, nx+j
             if 0 <= dy < Y+2 and 0 <= dx < X+2:
                 if visit[dy][dx] == 1: continue
-                if board[dy][dx] == '.':
-                    visit[dy][dx] = 1
-                    q.append((dy, dx))
-                elif board[dy][dx] == '$': # 문서이면
-                    board[dy][dx] = '.'
-                    visit[dy][dx] = 1
-                    doc += 1 # 주움
-                    q.append((dy, dx))
+                if board[dy][dx] == '*': continue
+                elif board[dy][dx].isupper():continue
+                elif board[dy][dx] == '$': # 문서면 줍기
+                    doc += 1
                 elif board[dy][dx].islower(): # 키 발견 시
                     door[ord(board[dy][dx])-ord('a')] = 1 # 문 리스트에 표시
-                    visit = [[0]*(X+2) for _ in range(Y+2)] # visit 배열 초기화
-                    board[dy][dx] = '.'
-                    q.append((dy, dx))
-                elif board[dy][dx].isupper(): # 방이면
-                    if door[ord(board[dy][dx])-ord('A')]: # 열쇠 있으면
-                        board[dy][dx] = '.'
-                        visit[dy][dx] = 1
-                        q.append((dy, dx))
-                else:
-                    continue
+                board[dy][dx] = '.'
+                visit[dy][dx] = 1
+                q.append((dy, dx))
 
 T = int(input())
 
@@ -59,5 +57,9 @@ for tc in range(T):
             if ord(board[y][x]) >= ord('A') and ord(board[y][x]) <= ord('Z'): # 방이면
                 if door[ord(board[y][x])-ord('A')]: # 보유 중인 열쇠로 열리면 열기
                     board[y][x] = '.'
-    BFS()
+    while True:
+        unlock()
+        BFS()
+        if sum(door) == 0:
+            break
     print(doc)

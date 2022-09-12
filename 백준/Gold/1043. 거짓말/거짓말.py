@@ -19,8 +19,7 @@ while truth:
     dontKnow = set() # 진실을 아직 모르는 사람들
 
     for idx in range(len(party)):
-        par = set(party[idx])
-        if truth_person in par: # 파티에 진실을 알고 있는 사람이 있으면
+        if truth_person in party[idx]: # 파티에 진실을 알고 있는 사람이 있으면
             party_check[idx] = 0 # 거짓말 할 수 없으므로 체크 해제
             dontKnow = dontKnow.union(party[idx]) # 진실을 아직 모르는 사람들에 파티원들 추가
 

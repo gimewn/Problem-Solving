@@ -8,8 +8,10 @@ while s <= e:
     mid = (s+e)//2
     temp = 0
     for tree in trees:
-        if tree >= mid:
+        if tree > mid:
             temp += tree-mid
+        if temp > H:
+            break
     if temp >= H:
         s = mid+1
     else:

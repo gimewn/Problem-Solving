@@ -1,19 +1,18 @@
-import sys
+N, H = map(int, input().split())
+trees = list(map(int, input().split()))
 
-N, M = map(int, sys.stdin.readline().split())
-tree = list(map(int, sys.stdin.readline().split()))
+s = 0
+e = max(trees)
 
-s = 1
-e = max(tree)
-
-while s<=e:
-    take = 0
+while s <= e:
     mid = (s+e)//2
-    for i in tree:
-        if i > mid:
-            take += i-mid
-    if take >= M:
+    temp = 0
+    for tree in trees:
+        if tree >= mid:
+            temp += tree-mid
+    if temp >= H:
         s = mid+1
-    elif take < M:
+    else:
         e = mid-1
+
 print(e)

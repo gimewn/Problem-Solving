@@ -1,5 +1,3 @@
-from collections import deque, defaultdict
-
 def solution(storey):
     answer = 0
     

@@ -1,4 +1,4 @@
-# [level 3] [인증평가(1차) 기출] 로봇이 지나간 경로
+# [level 3] [HSAT 3회 정기 코딩 인증평가 기출] 교차로
 
 [문제 링크](https://softeer.ai/practice/info.do?idx=1&eid=803&sw_prbl_sbms_sn=187648)
 

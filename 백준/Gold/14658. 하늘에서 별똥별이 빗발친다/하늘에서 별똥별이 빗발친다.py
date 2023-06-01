@@ -23,14 +23,19 @@ def main():
         for j in range(K):
             defense = 0
             jx, jy = stars[j]
-            # 만약 k번째 좌표가 기준 행과 기준 행 + l 사이이고, 기준 열과 기준 열 + l 사이라면
+            # ix와 jx 중 더 작은 값
+            minx = min(ix, jx)
+            # iy와 jy 중 더 작은 값
+            miny = min(iy, jy)
+            # 만약 k번째 좌표의 x가 minx 와 minx+l 사이이고
+            # y가 miny와 miny+l 사이라면
             # 막을 수 있으므로 defense ++
             for k in range(K):
                 kx, ky = stars[k]
-                if ix <= kx <= ix+L and jy <= ky <= jy+L:
+                if minx <= kx <= minx+L and miny <= ky <= miny+L:
                     defense += 1
-                # x좌표가 기준 행 + l 보다 커짐 => 뒤에 것들은 볼 필요 없음
-                elif kx > ix+L:
+                # x좌표가 minx + l 보다 커짐 => 뒤에 것들은 볼 필요 없음
+                elif kx > minx+L:
                     break
             # answer와 별똥별 개수에서 방어한 개수 뺀 것을 비교하여 갱신
             answer = min(answer, K-defense)

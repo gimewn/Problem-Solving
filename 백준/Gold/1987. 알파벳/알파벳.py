@@ -5,7 +5,7 @@ dir = [(0, 1), (0, -1), (1, 0), (-1, 0)]
 def BFS():
     q = set()
     q.add((0, 0, board[0][0]))
-    max_cnt = 0
+    max_cnt = 1
 
     while q:
         ny, nx, nlist = q.pop()

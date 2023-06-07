@@ -1,13 +1,22 @@
-N, K = map(int, input().split())
-md = [list(map(int, input().split())) for _ in range(N)]
-md.sort(key=lambda x:x[0])
+import sys
 
-bag = [[0]*(K+1) for _ in range(N+1)]
+N, K = map(int, sys.stdin.readline().split())
 
-for y in range(1, N+1):
-    for x in range(1, K+1):
-        if md[y-1][0] > x:
-            bag[y][x] = bag[y-1][x]
+bags = [[0]*(K+1) for _ in range(N)]
+
+items = []
+
+for _ in range(N):
+    W, V = map(int, sys.stdin.readline().split())
+    items.append((W, V))
+
+items.sort()
+
+for i in range(N):
+    for j in range(K+1):
+        if j < items[i][0]:
+            bags[i][j] = bags[i-1][j]
         else:
-            bag[y][x] = max(md[y-1][1]+bag[y-1][x-md[y-1][0]], bag[y-1][x])
-print(bag[N][K])
+            bags[i][j] = max(bags[i-1][j], bags[i-1][j-items[i][0]] + items[i][1])
+
+print(bags[-1][-1])

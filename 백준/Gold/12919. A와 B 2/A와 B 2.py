@@ -1,31 +1,29 @@
-from collections import deque
+import sys
 
-S = input()
-T = input()
+def bfs(start, end):
+    q = set()
+    q.add(start)
 
-diff = len(T) - len(S)
-
-def BFS():
-    q = deque()
-    q.append((T, 0))
-    visit = set()
     while q:
-        now, cnt = q.popleft()
-
-        if now == S:
+        now = q.pop()
+        if now == end:
             return 1
 
-        if cnt > diff:
-            return 0
+        if not now: continue
 
-        if now[-1] == 'A' and now[:-1] not in visit:
-            visit.add(now[:-1])
-            q.append((now[:-1], cnt+1))
+        if now[-1] == 'A':
+            q.add(now[:-1])
 
-        if now[0] == 'B' and now[1:][::-1] not in visit:
-            visit.add(now[1:][::-1])
-            q.append((now[1:][::-1], cnt+1))
+        if now[0] == 'B':
+            q.add(now[1:][::-1])
 
     return 0
 
-print(BFS())
+def main():
+    S = sys.stdin.readline().rstrip()
+    T = sys.stdin.readline().rstrip()
+
+    print(bfs(T, S))
+
+if __name__ == '__main__':
+    main()

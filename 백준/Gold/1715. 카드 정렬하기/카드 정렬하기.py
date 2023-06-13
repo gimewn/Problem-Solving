@@ -7,10 +7,6 @@ def main():
     nums = []
     answer = 0
 
-    if N == 1:
-        print(0)
-        exit(0)
-
     for _ in range(N):
         num = int(sys.stdin.readline())
         heapq.heappush(nums, num)

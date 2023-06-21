@@ -5,7 +5,7 @@ def prim(start):
     heap = []
     check = [0]*N
     res = 0
-
+    
     heapq.heappush(heap, (0, start))
 
     while heap:

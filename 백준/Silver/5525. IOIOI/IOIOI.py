@@ -19,5 +19,4 @@ while True:
         break
     word = word + S[end]
 
-
 print(answer)

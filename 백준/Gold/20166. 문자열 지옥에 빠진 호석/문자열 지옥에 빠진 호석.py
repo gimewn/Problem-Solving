@@ -1,11 +1,6 @@
 import sys
 from collections import deque
 
-def do_bfs():
-    for y in range(N):
-        for x in range(M):
-            bfs(y, x)
-
 def bfs(sy, sx):
     q = deque()
     q.append((sy, sx, board[sy][sx]))
@@ -37,7 +32,9 @@ for _ in range(K):
     word = inputs().rstrip()
     likes[word] = 0
 
-do_bfs()
+for y in range(N):
+    for x in range(M):
+        bfs(y, x)
 
 for value in likes.values():
     print(value)

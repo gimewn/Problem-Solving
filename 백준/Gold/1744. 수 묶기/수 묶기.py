@@ -41,12 +41,15 @@ if len(minus) % 2 == 1 and zero:
     plus.pop()
     minus.pop()
 
-find_partner(plus)
-find_partner(minus)
-left = plus+minus
-find_partner(left)
+if plus:
+    find_partner(plus)
+if minus:
+    find_partner(minus)
+if plus or minus:
+    left = plus+minus
+    find_partner(left)
 
-if left:
-    answer += left[0]
+    if left:
+        answer += left[0]
 
 print(answer)

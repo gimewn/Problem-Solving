@@ -1,31 +1,47 @@
 import sys
-input = sys.stdin.readline
 
-N, M = map(int, input().split()) # 사람의 수, 파티의 수
-truth = list(map(int, input().split()))[1:] # 진실을 알고 있는 사람들의 번호 리스트
-check = [0] * (N+1) # 진실을 알고 있는지 체크
-party = [0]*M
-party_check = [1]*M # 거짓말 할 수 있는 파티인지 체크
+def visit_parties():
+    global answer, know_truth
+    check = [0]*M
+    for _ in range(M):
+        exception = 0
+        plus_know_truth = set()
+        for idx in range(M):
+            if check[idx]:
+                continue
+            temp = set(parties[idx])
+            flag = 0
+            for person in parties[idx]:
+                if person in know_truth:
+                    flag = 1
+                    break
+            if flag:
+                exception += 1
+                plus_know_truth = plus_know_truth | temp
+                check[idx] = 1
+        if exception:
+            answer -= exception
+            know_truth = know_truth | plus_know_truth
+        else:
+            break
 
-for t in truth: # 최초의 진실을 알고 있는 사람 체크
-    check[t] = 1
+inputs = sys.stdin.readline
 
-for idx in range(M):
-    party[idx] = list(map(int, input().split()))[1:] # 파티 순서대로 입력
+N, M = map(int, inputs().split())
+know = list(map(int, inputs().split()))
+know_truth = set()
+parties = []
 
-while truth:
-    truth_person = truth.pop()
+for _ in range(M):
+    now_party = list(map(int, inputs().split()))
+    now_party.pop(0)
+    parties.append(now_party)
 
-    dontKnow = set() # 진실을 아직 모르는 사람들
+answer = M
 
-    for idx in range(M):
-        if truth_person in party[idx]: # 파티에 진실을 알고 있는 사람이 있으면
-            party_check[idx] = 0 # 거짓말 할 수 없으므로 체크 해제
-            dontKnow = dontKnow.union(party[idx]) # 진실을 아직 모르는 사람들에 파티원들 추가
-
-    for person in dontKnow:
-        if not check[person]: # 아직 진실을 모르면
-            truth.append(person) # 진실을 알게 되었으므로 truth 리스트에 추가
-            check[person] = 1 # 체크
-
-print(sum(party_check))
+if len(know) == 1:
+    print(M)
+else:
+    know_truth = set(know[1:])
+    visit_parties()
+    print(answer)

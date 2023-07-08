@@ -1,44 +1,31 @@
 import sys
 import heapq
 
-input = sys.stdin.readline
+inputs = sys.stdin.readline
 
-N, M = map(int, input().split())
-
-road = {}
-
-place = [float('inf')]*(N+1)
-
-for _ in range(M):
-    A, B, C = map(int, input().split())
-
-    if A in road:
-        road[A].append((B, C))
-    else:
-        road[A] = [(B, C)]
-
-    if B in road:
-        road[B].append((A, C))
-    else:
-        road[B] = [(A, C)]
-
-def dijkstra(start):
+def dijkstra(start, destination):
+    check = [2e9]*(N+1)
+    check[start] = 0
     heap = []
-    place[start] = 0
-    heapq.heappush(heap, (start, 0))
+    heapq.heappush(heap, (0, start))
 
     while heap:
-        now, cost = heapq.heappop(heap)
+        count, now = heapq.heappop(heap)
 
-        if cost > place[now]:
-            continue
+        for ncount, nvalue in eat[now]:
+            if check[nvalue] > count + ncount:
+                check[nvalue] = count + ncount
+                heapq.heappush(heap, (count+ncount, nvalue))
 
-        for i in road[now]:
-            next_cost = cost + i[1]
-            if next_cost < place[i[0]]:
-                place[i[0]] = next_cost
-                heapq.heappush(heap, (i[0], next_cost))
+    return check[-1]
 
-dijkstra(1)
+N, M = map(int, inputs().split())
 
-print(place[-1])
+eat = [[] for _ in range(N+1)]
+
+for _ in range(M):
+    a, b, c = map(int, inputs().split())
+    heapq.heappush(eat[a], (c, b))
+    heapq.heappush(eat[b], (c, a))
+
+print(dijkstra(1, N))

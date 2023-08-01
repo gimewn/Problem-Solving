@@ -31,7 +31,6 @@ def findSafeGround(h):
 N = int(input())
 
 board = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
-maxHeight = max(max(board))
 
 # 잠기지 않을 경우 => 안전구역 1개
 answer = 1

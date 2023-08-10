@@ -9,11 +9,9 @@ DP = [1]*N
 max_DP = 1
 
 for first in range(1, N):
-    max_value = 0
     for second in range(first):
         if kids[first] > kids[second]:
-            max_value = max(max_value, DP[second])
-    DP[first] += max_value
+            DP[first] = max(DP[first], DP[second] + 1)
     max_DP = max(max_DP, DP[first])
 
 print(N-max_DP)

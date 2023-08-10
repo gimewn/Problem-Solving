@@ -1,14 +1,19 @@
-n = int(input())
-kids = [int(input()) for _ in range(n)]
+import sys
 
-dp = [1]*n
+N = int(sys.stdin.readline())
 
-# LIS -> 정렬되어 있는 어린이 빼고 나머지를 옮기면 됨
-for i in range(1, n):
-    Max = 0
-    for j in range(i):
-        if kids[i] > kids[j]:
-            Max = max(Max, dp[j])
-    dp[i] += Max
+kids = [int(sys.stdin.readline()) for _ in range(N)]
 
-print(n-max(dp))
+DP = [1]*N
+
+max_DP = 1
+
+for first in range(1, N):
+    max_value = 0
+    for second in range(first):
+        if kids[first] > kids[second]:
+            max_value = max(max_value, DP[second])
+    DP[first] += max_value
+    max_DP = max(max_DP, DP[first])
+
+print(N-max_DP)

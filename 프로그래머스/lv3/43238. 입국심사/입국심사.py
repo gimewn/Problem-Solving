@@ -6,19 +6,19 @@ def solution(n, times):
             if count >= n:
                 break
         return count
-        
-    answer = 0
-    
+
+    answer = max(times) * n
+
     times.sort()
-    
+
     s, e = 1, max(times) * n
-    
+
     while s <= e:
         mid = (s + e) // 2
         if cal_people(mid) >= n:
-            answer = mid
+            answer = min(answer, mid)
             e = mid - 1
         else:
             s = mid + 1
-    
+
     return answer

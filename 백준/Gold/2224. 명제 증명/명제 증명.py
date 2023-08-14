@@ -19,7 +19,6 @@ def dijkstra(start):
 
     answer = set.union(answer, trues)
 
-
 N = int(sys.stdin.readline())
 
 alphabet_dict = dict()
@@ -34,9 +33,7 @@ for _ in range(N):
     else:
         alphabet_dict[forward] = [backward]
 
-alphabet_keys = sorted(alphabet_dict.keys())
-
-for key in alphabet_keys:
+for key in alphabet_dict.keys():
     dijkstra(key)
 
 answer = sorted(answer)

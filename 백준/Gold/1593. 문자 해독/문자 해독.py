@@ -29,10 +29,14 @@ start = 0
 for end in range(w_len-1, s_len):
     if S[end] not in S_count:
         S_count[S[end]] = 0
+    
     S_count[S[end]] += 1
+    
     if check_is_maya(S_count):
         answer += 1
+        
     S_count[S[start]] -= 1
+
     start += 1
 
 print(answer)

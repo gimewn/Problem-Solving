@@ -1,16 +1,14 @@
+from copy import deepcopy
+
 T = int(input())
 
 for t in range(1, T+1):
-    def check_performance(board, k, change):
+    def check_performance(board, k):
         for y in range(len(board[0])):
             count = 0
             prev = board[0][y]
-            if 0 in change:
-                prev = change[0]
             for x in range(1, len(board)):
                 now = board[x][y]
-                if x in change:
-                    now = change[x]
                 if prev == now:
                     count += 1
                 else:
@@ -22,22 +20,22 @@ for t in range(1, T+1):
                 return False
         return True
 
-    def dfs(level, idx, change):
+    def dfs(level, idx):
         global answer
         if level >= answer:
             return
 
-        if check_performance(board, K, change):
+        if check_performance(board, K):
             answer = min(answer, level)
             return
 
         for i in range(idx+1, D):
-            if i in change:
-                continue
+            origin = deepcopy(board[i])
             for type in [0, 1]:
-                change[i] = type
-                dfs(level+1, i, change)
-                del change[i]
+                board[i] = [type]*W
+                dfs(level+1, i)
+            board[i] = origin
+
     """
     D = 보호 필름 두께
     W = 가로 크기
@@ -47,6 +45,6 @@ for t in range(1, T+1):
     board = [list(map(int, input().split())) for _ in range(D)]
     answer = D
 
-    dfs(0, -1, {})
+    dfs(0, -1)
 
     print(f'#{t} {answer}')

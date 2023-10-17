@@ -1,18 +1,15 @@
-import sys
-from collections import deque
-
-N = int(sys.stdin.readline())
-towers = deque(list(map(int, sys.stdin.readline().split())))
+N = int(input())
+castle = list(map(int, input().split(" ")))
+stack = []
 answer = [0]*N
-prev_towers = deque()
 
-for index in range(N-1, -1, -1):
-    while prev_towers:
-        if prev_towers[-1][1] < towers[index]:
-            answer[prev_towers[-1][0]] = index+1
-            prev_towers.pop()
-        else:
+for idx in range(N):
+    while stack:
+        if castle[idx] < stack[-1][1]:
+            answer[idx] = stack[-1][0]
             break
-    prev_towers.append((index, towers[index]))
+        else:
+            stack.pop()
+    stack.append((idx+1, castle[idx]))
 
 print(*answer)
